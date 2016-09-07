@@ -1,0 +1,27 @@
+
+## Delete Service Chain Business for FireWall
+
+## Enter System View
+system-view
+
+## Remove InBound Rule
+policy-based-route
+undo rule ${Vpn_Instance}_Rule_InBound
+quit
+
+## Remove OutBound Rule
+policy-based-route
+undo rule ${Vpn_Instance}_Rule_OutBound
+quit
+
+## Debind interface of Vpn Instance
+undo ip binding vpn-instance ${Vpn_Instance}
+
+## Remove Vpn Instance
+undo ip vpn-instance ${Vpn_Instance}
+
+## Delete Vlan Info
+undo vlan ${Vlan_ID}
+
+## Exit System View
+quit

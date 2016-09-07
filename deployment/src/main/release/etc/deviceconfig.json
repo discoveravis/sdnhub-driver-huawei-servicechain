@@ -1,0 +1,20 @@
+[
+	{
+		"ip": "10.229.41.100",
+		"port": 22,
+		"user": "root",
+		"password": "Test_12345"
+	},
+	{
+		"ip": "10.229.51.27",
+		"port": 22,
+		"user": "root",
+		"password": "Test_12345"
+	},
+	{
+		"ip": "127.0.0.1",
+		"port": 22,
+		"user": "root",
+		"password": "Test_12345"
+	}
+]

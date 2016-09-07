@@ -1,0 +1,73 @@
+
+## Load Configuration Script for Firewall
+
+## Enter System View
+system-view
+
+## Create Tenant Vpn
+ip vpn-instance ${Vpn_Instance}
+commit
+
+## Create VLAN
+vlan ${Vlan_ID}
+
+## Allow VLAN in Interface
+interface g1/0/0
+port link-type trunk
+port trunk allow-pass vlan {Vlan_ID}
+commit
+quit
+
+## Bind SubInterface to Vpn and Alloc IpAddress 
+interface g1/0/0.${Vlan_ID}
+vlan-type dot1q ${Vlan_ID}
+ip binding vpn-instance {Vpn_Instance}
+ip address 10.10.1.2 24
+commit
+quit
+
+## Allow VLAN in Interface
+interface g1/0/1
+port link-type trunk 
+port trunk allow-pass vlan {Vlan_ID}
+commit
+quit
+
+## Bind SubInterface to Vpn and Alloc IpAddress
+interface g1/0/1.${Vlan_ID}
+vlan-type dot1q ${Vlan_ID}
+ip binding vpn-instance {Vpn_Instance}
+ip address 10.10.1.3 24
+commit
+quit
+
+## Add InBound Interface to UnTrust Zone
+firewall zone trust
+add interface g1/0/1.${Vlan_ID}
+commit
+quit
+
+## Add OutBound Interface to Trust Zone
+firewall zone untrust
+add interface g1/0/0.${Vlan_ID}
+commit
+quit
+
+## Create Inbound Pbr
+policy-based-route
+rule name ${Vpn_Instance}_Rule_InBound
+ingress-interface g1/0/0.${Vlan_ID}
+action pbr egress-interface g1/0/1.${Vlan_ID} next-hop 10.10.1.5
+commit
+quit
+
+## Create Outbound Pbr
+policy-based-route
+rule name ${Vpn_Instance}_Rule_OutBound
+ingress-interface g1/0/1.${Vlan_ID}
+action pbr egress-interface g1/0/0.${Vlan_ID} next-hop 10.10.1.4
+commit
+quit
+
+## Exit System View
+quit

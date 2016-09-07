@@ -1,0 +1,11 @@
+
+## Query Gateway VpnInstance Interface
+
+## Enter System View
+system-view
+
+## Query VpnInstance Interface
+display ip vpn-instance ${Vpn_Instance} interface
+
+## Exit System View
+quit

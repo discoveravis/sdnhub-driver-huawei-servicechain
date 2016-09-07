@@ -1,0 +1,40 @@
+
+## Delete Service Chain Business for GateWay
+
+## Enter System View
+system-view
+
+## Delete InBound ACL Rule
+undo acl ${Vpn_Instance}_Acl_Rule_InBound
+
+## Delete OutBound ACL Rule
+undo acl ${Vpn_Instance}_Acl_Rule_OutBound
+
+## Delete InBound Traffic Classifier
+undo traffic classifier ${Vpn_Instance}_Classifier_InBound
+
+## Delete OutBound Traffic Classifier
+undo traffic classifier ${Vpn_Instance}_Classifier_OutBound
+
+## Delete InBound Traffic Behavior
+undo traffic behavior ${Vpn_Instance}_Behavior_InBound
+
+## Delete OutBound Traffic Behavior
+undo traffic behavior ${Vpn_Instance}_Behavior_OutBound
+
+## Remove InBound Traffic Policy
+interface ${Inbound_Interface}
+undo traffic-policy ${Vpn_Instance}_Policy_InBound inbound
+
+## Remove OutBound Traffic Policy
+interface ${Outbound_Interface}
+undo traffic-policy ${Vpn_Instance}_Policy_OutBound inbound
+
+## UnBind Interface from Vpn Instance 
+undo ip binding vpn-instance ${Vpn_Instance}
+
+## Delete Vlan
+undo vlan ${Vlan_ID}
+
+## Exit System View
+quit

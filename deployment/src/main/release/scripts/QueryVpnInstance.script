@@ -1,0 +1,11 @@
+
+## Query Gateway VpnInstance Info
+
+## Enter System View
+system-view
+
+## Query vpn-instance info
+display ip vpn-instance verbose
+
+## Exit System View
+quit

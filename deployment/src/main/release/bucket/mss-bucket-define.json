@@ -1,0 +1,8 @@
+{
+	"name": "scdriverdb",
+	"owner": "scdriversvc",
+	"authorization": "private",
+	"allowread": [
+		"scdriversvc"
+	]
+}
