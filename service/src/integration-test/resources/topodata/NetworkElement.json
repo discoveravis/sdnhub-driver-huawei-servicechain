@@ -1,0 +1,28 @@
+[
+	{
+		"name": "GwNe",
+		"description": "Gateway NetworkElement",
+		"productName": "SNC",
+		"version": "V1R3",
+		"source": "os",
+		"logicID": "849494949",
+		"phyNeID": "8965969966906",
+		"nativeID": "networkwork1id",
+		"ipAddress": "10.229.41.100",
+		"adminState": "active",
+		"operState": "up"
+	},
+	{
+		"name": "FwNe",
+		"description": "Firewall NetworkElement",
+		"productName": "SNC",
+		"version": "V1R3",
+		"source": "os",
+		"logicID": "849494949",
+		"phyNeID": "8965969966906",
+		"nativeID": "networkwork2id",
+		"ipAddress": "10.229.51.27",
+		"adminState": "active",
+		"operState": "up"
+	}
+]

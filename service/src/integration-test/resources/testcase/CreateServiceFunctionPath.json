@@ -1,0 +1,35 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-servicechain/v1/paths",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"serviceFunctionPath": {
+				"id": "SfpId",
+				"name": "VpcName",
+				"description": "TenantName",
+				"scfNeId": "ScfNeId",
+				"transportType": "VLAN",
+				"symmetric": true,
+				"servicePathHop": [
+					{
+						"hop_number": 1,
+						"sfiId": "SfiId",
+						"sffId": "SffId"
+					}
+				]
+			}
+		}
+	},
+	"response": {
+		"status": 201,
+		"json": {
+			"serviceChainPath": {
+				"id": "SfpId",
+				"createTime": 1449494999
+			}
+		}
+	}
+}

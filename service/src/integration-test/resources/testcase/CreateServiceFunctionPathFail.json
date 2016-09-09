@@ -1,0 +1,16 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-servicechain/v1/paths",
+		"method": "post",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		},
+		"json": {
+			"serviceFunctionPath": null
+		}
+	},
+	"response": {
+		"status": 500,
+		"json": null
+	}
+}

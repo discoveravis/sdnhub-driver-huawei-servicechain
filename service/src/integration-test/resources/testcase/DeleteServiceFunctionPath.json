@@ -1,0 +1,13 @@
+{
+	"request": {
+		"uri": "/openoapi/sbi-servicechain/v1/paths/{service-function-path-id}",
+		"method": "delete",
+		"headers": {
+			"Content-Type": "application/json;charset=UTF-8"
+		}
+	},
+	"response": {
+		"status": 204,
+		"json": null
+	}
+}
