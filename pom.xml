@@ -14,12 +14,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <package.name>org.openo.sdno.servicechaindriverservice</package.name>
+        <package.name>servicechaindriverservice</package.name>
     </properties>
-
-    <scm>
-        <tag>HEAD</tag>
-    </scm>
 
     <modules>
         <module>service</module>
