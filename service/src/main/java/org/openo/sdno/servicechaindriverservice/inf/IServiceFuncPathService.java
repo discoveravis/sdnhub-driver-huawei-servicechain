@@ -17,7 +17,7 @@
 package org.openo.sdno.servicechaindriverservice.inf;
 
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.servicechaindriverservice.nbimodel.ServiceFunctionPath;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
 
 /**
  * Interface of Service Function Path Service.<br>
@@ -30,18 +30,18 @@ public interface IServiceFuncPathService {
     /**
      * Create ServiceFunctionPath.<br>
      * 
-     * @param path ServiceFunctionPath data
-     * @return ServiceFunctionPath data created
-     * @throws ServiceException when create ServiceFunctionPath failed
+     * @param path NetServiceChainPath data
+     * @return NetServiceChainPath data created
+     * @throws ServiceException when create NetServiceChainPath failed
      * @since SDNO 0.5
      */
-    ServiceFunctionPath create(ServiceFunctionPath path) throws ServiceException;
+    NetServiceChainPath create(NetServiceChainPath path) throws ServiceException;
 
     /**
      * Delete ServiceFunctionPath.<br>
      * 
-     * @param uuid ServiceFunctionPath uuid
-     * @throws ServiceException when delete ServiceFunctionPath failed
+     * @param uuid NetServiceChainPath uuid
+     * @throws ServiceException when delete NetServiceChainPath failed
      * @since SDNO 0.5
      */
     void delete(String uuid) throws ServiceException;

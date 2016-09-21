@@ -16,6 +16,7 @@
 
 package org.openo.sdno.servicechaindriverservice.rest;
 
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,10 +38,10 @@ import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.baseservice.util.RestUtils;
 import org.openo.sdno.framework.container.util.JsonUtil;
 import org.openo.sdno.overlayvpn.consts.HttpCode;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPathRsp;
 import org.openo.sdno.overlayvpn.util.check.UuidUtil;
 import org.openo.sdno.servicechaindriverservice.inf.IServiceFuncPathService;
-import org.openo.sdno.servicechaindriverservice.nbimodel.ServiceChainPath;
-import org.openo.sdno.servicechaindriverservice.nbimodel.ServiceFunctionPath;
 import org.openo.sdno.servicechaindriverservice.util.CheckServiceFuncPathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,8 +59,6 @@ public class ServiceFuncPathRoaResource {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceFuncPathRoaResource.class);
 
-    private static final String SERVICE_FUNCTION_PATH_KEY = "serviceFunctionPath";
-
     private static final String SERVICE_CHAIN_PATH_KEY = "serviceChainPath";
 
     @Resource
@@ -70,57 +69,57 @@ public class ServiceFuncPathRoaResource {
     }
 
     /**
-     * Create Service Function Path.<br>
+     * Create Service Chain Path.<br>
      * 
      * @param request HttpServletRequest Object
      * @param response HttpServletResponse Object
      * @return ServiceChainPath created
-     * @throws ServiceException when create ServiceFunctionPath failed
+     * @throws ServiceException when create NetServiceChainPath failed
      * @since SDNO 0.5
      */
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Map<String, ServiceChainPath> create(@Context HttpServletRequest request,
+    public Map<String, NetServiceChainPathRsp> create(@Context HttpServletRequest request,
             @Context HttpServletResponse response) throws ServiceException {
         String requestBody = RestUtils.getRequestBody(request);
         if(StringUtils.isEmpty(requestBody)) {
-            LOGGER.error("Request body is null!!");
+            LOGGER.error("Request body is null");
             throw new ServiceException("Request body is null");
         }
 
-        Map<String, ServiceFunctionPath> pathDataMap =
-                JsonUtil.fromJson(requestBody, new TypeReference<Map<String, ServiceFunctionPath>>() {});
-        if(null == pathDataMap || null == pathDataMap.get(SERVICE_FUNCTION_PATH_KEY)) {
-            LOGGER.error("no service function path data in request!!");
-            throw new ServiceException("no service function path data in request!!");
+        Map<String, NetServiceChainPath> pathDataMap =
+                JsonUtil.fromJson(requestBody, new TypeReference<Map<String, NetServiceChainPath>>() {});
+        if(null == pathDataMap || null == pathDataMap.get(SERVICE_CHAIN_PATH_KEY)) {
+            LOGGER.error("no service chain path data in request");
+            throw new ServiceException("no service chain path data in request");
         }
 
-        ServiceFunctionPath pathData = pathDataMap.get(SERVICE_FUNCTION_PATH_KEY);
+        NetServiceChainPath pathData = pathDataMap.get(SERVICE_CHAIN_PATH_KEY);
 
         CheckServiceFuncPathUtil.check(pathData);
 
-        ServiceFunctionPath newPathData = service.create(pathData);
+        NetServiceChainPath newPathData = service.create(pathData);
 
         response.setStatus(HttpCode.CREATE_OK);
 
-        Map<String, ServiceChainPath> resultRsp = new HashMap<String, ServiceChainPath>();
-        ServiceChainPath serviceChainPath = new ServiceChainPath();
-        serviceChainPath.setId(newPathData.getId());
-        serviceChainPath.setCreateTime(System.currentTimeMillis());
+        Map<String, NetServiceChainPathRsp> resultRsp = new HashMap<String, NetServiceChainPathRsp>();
+        NetServiceChainPathRsp serviceChainPath = new NetServiceChainPathRsp();
+        serviceChainPath.setUuid(newPathData.getUuid());
+        serviceChainPath.setCreateTime(BigInteger.valueOf(System.currentTimeMillis()));
         resultRsp.put(SERVICE_CHAIN_PATH_KEY, serviceChainPath);
 
         return resultRsp;
     }
 
     /**
-     * Delete Service Function Path.<br>
+     * Delete Service Chain Path.<br>
      * 
      * @param request HttpServletRequest Object
      * @param response HttpServletResponse Object
-     * @param uuid ServiceFunctionPath uuid
-     * @return ServiceFunctionPath Object deleted
-     * @throws ServiceException when delete ServiceFunctionPath failed
+     * @param uuid NetServiceChainPath uuid
+     * @return NetServiceChainPath Object deleted
+     * @throws ServiceException when delete NetServiceChainPath failed
      * @since SDNO 0.5
      */
     @DELETE

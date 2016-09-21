@@ -21,12 +21,12 @@ import javax.annotation.Resource;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.overlayvpn.brs.invdao.NetworkElementInvDao;
 import org.openo.sdno.overlayvpn.brs.model.NetworkElementMO;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
 import org.openo.sdno.servicechaindriverservice.db.ServiceChainInfoDao;
 import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfig;
 import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfigReader;
 import org.openo.sdno.servicechaindriverservice.inf.IServiceFuncPathService;
 import org.openo.sdno.servicechaindriverservice.model.ServiceChainInfo;
-import org.openo.sdno.servicechaindriverservice.nbimodel.ServiceFunctionPath;
 import org.openo.sdno.servicechaindriverservice.sbi.FirewallConfigurationAPI;
 import org.openo.sdno.servicechaindriverservice.sbi.GatewayConfigurationAPI;
 import org.openo.sdno.servicechaindriverservice.util.VpnInstanceUtil;
@@ -51,16 +51,16 @@ public class ServiceFuncPathSvcImpl implements IServiceFuncPathService {
     }
 
     @Override
-    public ServiceFunctionPath create(ServiceFunctionPath path) throws ServiceException {
+    public NetServiceChainPath create(NetServiceChainPath path) throws ServiceException {
 
-        String serviceChainId = path.getId();
+        String serviceChainId = path.getUuid();
         if(null != serviceInfoDao.queryByServiceChainId(serviceChainId)) {
             LOGGER.error("Service Chain Info already exist!!");
             throw new ServiceException("Service Chain Info already exist");
         }
 
         String sfcNeId = path.getScfNeId();
-        String sfiNeId = path.getServicePathHop().get(0).getSfiId();
+        String sfiNeId = path.getServicePathHops().get(0).getSfiId();
 
         NetworkElementInvDao neInvDao = new NetworkElementInvDao();
 

@@ -19,7 +19,7 @@ package org.openo.sdno.servicechaindriverservice.util;
 import org.apache.commons.collections.CollectionUtils;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.framework.container.util.UuidUtils;
-import org.openo.sdno.servicechaindriverservice.nbimodel.ServiceFunctionPath;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,19 +40,19 @@ public class CheckServiceFuncPathUtil {
     /**
      * Check ServiceFuncPath data.<br>
      * 
-     * @param pathData ServiceFunctionPath data
+     * @param pathData NetServiceChainPath data
      * @throws ServiceException when ServiceFuncPath data is invalid
      * @since SDNO 0.5
      */
-    public static void check(ServiceFunctionPath pathData) throws ServiceException {
-        UuidUtils.checkUuid(pathData.getId());
+    public static void check(NetServiceChainPath pathData) throws ServiceException {
+        UuidUtils.checkUuid(pathData.getUuid());
         UuidUtils.checkUuid(pathData.getScfNeId());
 
-        if(CollectionUtils.isEmpty(pathData.getServicePathHop())) {
+        if(CollectionUtils.isEmpty(pathData.getServicePathHops())) {
             LOGGER.error("No hop information in Service Function Path.");
             throw new ServiceException("No hop information in Service Function Path.");
         }
 
-        UuidUtils.checkUuid(pathData.getServicePathHop().get(0).getSfiId());
+        UuidUtils.checkUuid(pathData.getServicePathHops().get(0).getSfiId());
     }
 }
