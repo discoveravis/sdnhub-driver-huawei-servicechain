@@ -4,37 +4,55 @@
 ## Enter System View
 system-view
 
-## Delete InBound ACL Rule
-undo acl ${Vpn_Instance}_Acl_Rule_InBound
+## Remove sub interface configuration
+interface 10GE1/0/3.${Vlan_ID}
+undo ip binding vpn-instance ${Vpn_Instance}
+undo dot1q termination vid ${Vlan_ID}
+commit
+quit
 
-## Delete OutBound ACL Rule
-undo acl ${Vpn_Instance}_Acl_Rule_OutBound
+## Remove sub interface configuration
+interface 10GE1/0/4.${Vlan_ID}
+undo ip binding vpn-instance ${Vpn_Instance}
+undo dot1q termination vid ${Vlan_ID}
+commit
+quit
 
-## Delete InBound Traffic Classifier
-undo traffic classifier ${Vpn_Instance}_Classifier_InBound
+## UnBind Traffic Policy to InBound Interface
+interface ${Inbound_Interface}
+undo traffic-policy Policy_InBound_${Vlan_ID} inbound
+commit
+quit
 
-## Delete OutBound Traffic Classifier
-undo traffic classifier ${Vpn_Instance}_Classifier_OutBound
-
-## Delete InBound Traffic Behavior
-undo traffic behavior ${Vpn_Instance}_Behavior_InBound
-
-## Delete OutBound Traffic Behavior
-undo traffic behavior ${Vpn_Instance}_Behavior_OutBound
+## UnBind Traffic Policy to OutBound Interface
+interface ${Outbound_Interface}
+undo traffic-policy Policy_OutBound_${Vlan_ID} inbound
+commit
+quit
 
 ## Remove InBound Traffic Policy
-interface ${Inbound_Interface}
-undo traffic-policy ${Vpn_Instance}_Policy_InBound inbound
+undo traffic policy Policy_InBound_${Vlan_ID}
+commit
 
 ## Remove OutBound Traffic Policy
-interface ${Outbound_Interface}
-undo traffic-policy ${Vpn_Instance}_Policy_OutBound inbound
+undo traffic policy Policy_OutBound_${Vlan_ID}
+commit
 
-## UnBind Interface from Vpn Instance 
-undo ip binding vpn-instance ${Vpn_Instance}
+## Remove Traffic Classifier
+undo traffic classifier Classifier_${Vpn_Instance}
+commit
 
-## Delete Vlan
-undo vlan ${Vlan_ID}
+## Remove InBound Traffic Behavior
+undo traffic behavior Behavior_InBound_${Vlan_ID}
+commit
+
+## Remove OutBound Traffic Behavior
+undo traffic behavior Behavior_OutBound_${Vlan_ID}
+commit
+
+## Remove ACL Rule
+undo acl ${Acl_Rule_ID}
+commit
 
 ## Exit System View
 quit

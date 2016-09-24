@@ -18,14 +18,14 @@ package org.openo.sdno.servicechaindriverservice.util;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.io.FileInputStream;
+import java.io.IOException;
 
+import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
-import org.openo.sdno.cli.protocol.SshProtocol;
 import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfig;
+import org.openo.sdno.servicechaindriverservice.sbi.GatewayConfigurationAPI;
 
 import mockit.Mock;
 import mockit.MockUp;
@@ -33,85 +33,62 @@ import mockit.MockUp;
 public class VpnInstanceUtilTest {
 
     @Test
-    public void testVpnInstanceRegexPattern() {
+    public void testQueryVpnInstanceName() throws ServiceException {
 
-        Pattern pattern = Pattern.compile("VPN-Instance Name and ID : (.*),");
-        Matcher resultMatcher = pattern.matcher(" VPN-Instance Name and ID : test, 1");
-        while(resultMatcher.find()) {
-            assertTrue("test".equals(resultMatcher.group(1)));
-        }
-
-    }
-
-    @Test
-    public void testVpnInterfaceRegexPattern() {
-
-        Pattern pattern = Pattern.compile("Interface list: ");
-        Matcher resultMatcher = pattern.matcher("Test Interface list: interface1\r\n interface2\r\n interface3\r\n");
-        while(resultMatcher.find()) {
-            assertTrue(5 == resultMatcher.start());
-            assertTrue(21 == resultMatcher.end());
-        }
-    }
-
-    @Test
-    public void testqueryVpnInstanceName() {
-
-        DCDeviceConfig dcConfig = new DCDeviceConfig();
-
-        new MockUp<SshProtocol>() {
+        new MockUp<GatewayConfigurationAPI>() {
 
             @Mock
-            String executeShellScript(String scriptFile, Map<String, String> replaceParamMap) throws ServiceException {
-                return "VPN-Instance Name and ID : vrf_Tenant_Vpc_9448, 1";
+            public String queryVpnInstance() throws ServiceException, IOException {
+                FileInputStream fileStream = null;
+                fileStream = new FileInputStream("src/test/resources/queryvpninstance.txt");
+                @SuppressWarnings("deprecation")
+                String vpnInstanceContent = IOUtils.toString(fileStream);
+                return vpnInstanceContent;
             }
         };
 
-        try {
-            String vpnInstance = VpnInstanceUtil.queryVpnInstanceName(dcConfig, "Tenant", "Vpc");
-            assertTrue("vrf_Tenant_Vpc_9448".equals(vpnInstance));
-        } catch(ServiceException e) {
-            assertTrue(false);
-        }
+        String vpnInstance = VpnInstanceUtil.queryVpnInstanceName(new DCDeviceConfig(), "tenant", "vpc");
+        assertTrue("vrf_tenant_vpc_9999".equals(vpnInstance));
     }
 
     @Test
-    public void testQueryInBoundInterface() {
+    public void testQueryInBoundInterface() throws ServiceException {
 
-        DCDeviceConfig dcConfig = new DCDeviceConfig();
-
-        new MockUp<SshProtocol>() {
+        new MockUp<GatewayConfigurationAPI>() {
 
             @Mock
-            String executeShellScript(String scriptFile, Map<String, String> replaceParamMap) throws ServiceException {
-                return "Interface list: interface1, interface2";
+            public String queryVpnInterface(String vpnName) throws ServiceException, IOException {
+                FileInputStream fileStream = null;
+                fileStream = new FileInputStream("src/test/resources/queryvpninterface.txt");
+                @SuppressWarnings("deprecation")
+                String vpnInterfaceContent = IOUtils.toString(fileStream);
+                return vpnInterfaceContent;
             }
         };
 
-        try {
-            String inBoundInterface = VpnInstanceUtil.queryInBoundInterface(dcConfig, "Vpn");
-            assertTrue("interface1".equals(inBoundInterface));
-        } catch(ServiceException e) {
-            assertTrue(false);
-        }
+        String inBoundInterface = VpnInstanceUtil.queryInBoundInterface(new DCDeviceConfig(), "vrf_tenant_vpc_9999");
+        assertTrue("10GE1/0/2.2".equals(inBoundInterface));
     }
 
     @Test
     public void testQueryOutBoundInterface() {
 
-        DCDeviceConfig dcConfig = new DCDeviceConfig();
-
-        new MockUp<SshProtocol>() {
+        new MockUp<GatewayConfigurationAPI>() {
 
             @Mock
-            String executeShellScript(String scriptFile, Map<String, String> replaceParamMap) throws ServiceException {
-                return "Interface list: interface1, interface2";
+            public String queryVpnInterface(String vpnName) throws ServiceException, IOException {
+                FileInputStream fileStream = null;
+                fileStream = new FileInputStream("src/test/resources/queryvpninterface.txt");
+                @SuppressWarnings("deprecation")
+                String vpnInterfaceContent = IOUtils.toString(fileStream);
+                return vpnInterfaceContent;
             }
         };
 
         try {
-            String outBoundInterface = VpnInstanceUtil.queryOutBoundInterface(dcConfig, "Vpn");
-            assertTrue("interface2".equals(outBoundInterface));
+            String outBoundInterface =
+                    VpnInstanceUtil.queryOutBoundInterface(new DCDeviceConfig(), "vrf_tenant_vpc_9999");
+            assertTrue("10GE1/0/1.2".equals(outBoundInterface));
         } catch(ServiceException e) {
             assertTrue(false);
         }

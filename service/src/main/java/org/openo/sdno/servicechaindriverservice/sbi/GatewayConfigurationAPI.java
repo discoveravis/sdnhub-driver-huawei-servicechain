@@ -36,6 +36,8 @@ public class GatewayConfigurationAPI extends ConfigurationAPI {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ConfigurationAPI.class);
 
+    private static final int BASE_ACL_NUMBER = 2000;
+
     private static final String LOAD_CONFIG_FILE = "scripts/LoadGwConfig.script";
 
     private static final String DELOAD_CONFIG_FILE = "scripts/DeLoadGwConfig.script";
@@ -61,12 +63,13 @@ public class GatewayConfigurationAPI extends ConfigurationAPI {
             throw new ServiceException("ServiceChainInfo parameter is invalid");
         }
 
-        Map<String, String> paramMap = new HashMap<String, String>();
-        paramMap.put("Vpn_Instance", scInfo.getVpnInstance());
-        paramMap.put("Vlan_ID", String.valueOf(scInfo.getVlanId()));
-        paramMap.put("Inbound_Interface", scInfo.getInBoundInterface());
-        paramMap.put("Outbound_Interface", scInfo.getOutBoundInterface());
-        sshProtocol.executeShellScript(LOAD_CONFIG_FILE, paramMap);
+        Map<String, String> scParamMap = new HashMap<String, String>();
+        scParamMap.put("Vpn_Instance", scInfo.getVpnInstance());
+        scParamMap.put("Vlan_ID", String.valueOf(scInfo.getVlanId()));
+        scParamMap.put("Inbound_Interface", scInfo.getInBoundInterface());
+        scParamMap.put("Outbound_Interface", scInfo.getOutBoundInterface());
+        scParamMap.put("Acl_Rule_ID", String.valueOf(scInfo.getVlanId() + BASE_ACL_NUMBER));
+        sshProtocol.executeShellScript(LOAD_CONFIG_FILE, scParamMap);
     }
 
     @Override
@@ -81,6 +84,7 @@ public class GatewayConfigurationAPI extends ConfigurationAPI {
         scParamMap.put("Vlan_ID", String.valueOf(scInfo.getVlanId()));
         scParamMap.put("Inbound_Interface", scInfo.getInBoundInterface());
         scParamMap.put("Outbound_Interface", scInfo.getOutBoundInterface());
+        scParamMap.put("Acl_Rule_ID", String.valueOf(scInfo.getVlanId() + BASE_ACL_NUMBER));
         sshProtocol.executeShellScript(DELOAD_CONFIG_FILE, scParamMap);
     }
 

@@ -1,0 +1,7 @@
+ Total VPN-Instances configured      : 2
+ Total IPv4 VPN-Instances configured : 0
+ Total IPv6 VPN-Instances configured : 0
+
+ VPN-Instance Name and ID : Test, 4
+
+ VPN-Instance Name and ID : vrf_tenant_vpc_9999, 2

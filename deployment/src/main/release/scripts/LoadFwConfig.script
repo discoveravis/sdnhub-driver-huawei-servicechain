@@ -6,67 +6,60 @@ system-view
 
 ## Create Tenant Vpn
 ip vpn-instance ${Vpn_Instance}
-commit
+quit
 
 ## Create VLAN
 vlan ${Vlan_ID}
+quit
 
 ## Allow VLAN in Interface
-interface g1/0/0
-port link-type trunk
-port trunk allow-pass vlan {Vlan_ID}
-commit
+interface GigabitEthernet1/0/0
+undo portswitch
 quit
 
 ## Bind SubInterface to Vpn and Alloc IpAddress 
-interface g1/0/0.${Vlan_ID}
+interface GigabitEthernet1/0/0.${Vlan_ID}
 vlan-type dot1q ${Vlan_ID}
-ip binding vpn-instance {Vpn_Instance}
-ip address 10.10.1.2 24
-commit
+ip binding vpn-instance ${Vpn_Instance}
+ip address 10.10.5.1 24
 quit
 
 ## Allow VLAN in Interface
-interface g1/0/1
-port link-type trunk 
-port trunk allow-pass vlan {Vlan_ID}
-commit
+interface GigabitEthernet1/0/1
+undo portswitch
 quit
 
 ## Bind SubInterface to Vpn and Alloc IpAddress
-interface g1/0/1.${Vlan_ID}
+interface GigabitEthernet1/0/1.${Vlan_ID}
 vlan-type dot1q ${Vlan_ID}
-ip binding vpn-instance {Vpn_Instance}
-ip address 10.10.1.3 24
-commit
+ip binding vpn-instance ${Vpn_Instance}
+ip address 10.10.6.1 24
 quit
 
-## Add InBound Interface to UnTrust Zone
+## Add InBound Interface to Trust Zone
 firewall zone trust
-add interface g1/0/1.${Vlan_ID}
-commit
+add interface GigabitEthernet1/0/1.${Vlan_ID}
 quit
 
-## Add OutBound Interface to Trust Zone
+## Add OutBound Interface to UnTrust Zone
 firewall zone untrust
-add interface g1/0/0.${Vlan_ID}
-commit
+add interface GigabitEthernet1/0/0.${Vlan_ID}
 quit
 
-## Create Inbound Pbr
+## Create InBound Pbr
 policy-based-route
-rule name ${Vpn_Instance}_Rule_InBound
-ingress-interface g1/0/0.${Vlan_ID}
-action pbr egress-interface g1/0/1.${Vlan_ID} next-hop 10.10.1.5
-commit
+rule name InBound_Rule_${Vlan_ID}
+ingress-interface GigabitEthernet1/0/0.${Vlan_ID}
+action pbr egress-interface GigabitEthernet1/0/1.${Vlan_ID} next-hop 10.10.3.1
+quit
 quit
 
-## Create Outbound Pbr
+## Create OutBound Pbr
 policy-based-route
-rule name ${Vpn_Instance}_Rule_OutBound
-ingress-interface g1/0/1.${Vlan_ID}
-action pbr egress-interface g1/0/0.${Vlan_ID} next-hop 10.10.1.4
-commit
+rule name OutBound_Rule_${Vlan_ID}
+ingress-interface GigabitEthernet1/0/1.${Vlan_ID}
+action pbr egress-interface GigabitEthernet1/0/0.${Vlan_ID} next-hop 10.10.4.1
+quit
 quit
 
 ## Exit System View

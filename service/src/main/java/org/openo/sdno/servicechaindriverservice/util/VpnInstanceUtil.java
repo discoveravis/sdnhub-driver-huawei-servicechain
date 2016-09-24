@@ -37,7 +37,7 @@ public class VpnInstanceUtil {
 
     private static final Pattern QUERY_VPN_INSTANCE_PATTERN = Pattern.compile("VPN-Instance Name and ID : (.*),");
 
-    private static final Pattern QUERY_VPN_INTERFACE_PATTERN = Pattern.compile("Interface list: ");
+    private static final Pattern QUERY_VPN_INTERFACE_PATTERN = Pattern.compile("Interface list : ");
 
     private VpnInstanceUtil() {
     }
@@ -103,12 +103,17 @@ public class VpnInstanceUtil {
         GatewayConfigurationAPI gwAPI = new GatewayConfigurationAPI(deviceCfg);
         String vpnInterfaceContent = gwAPI.queryVpnInterface(vpnName);
         Matcher resultMatcher = QUERY_VPN_INTERFACE_PATTERN.matcher(vpnInterfaceContent);
-        String infNameContent = "";
+        String rawInfNameContent = "";
         while(resultMatcher.find()) {
-            infNameContent = vpnInterfaceContent.substring(resultMatcher.end());
+            rawInfNameContent = vpnInterfaceContent.substring(resultMatcher.end());
         }
 
-        infNameContent = infNameContent.replaceAll("\r\n", "");
+        String[] splitInfContent = rawInfNameContent.split("\r\n\r\n");
+        if(null == splitInfContent || 0 == splitInfContent.length) {
+            throw new ServiceException("Queried Interface List is wrong!!");
+        }
+
+        String infNameContent = splitInfContent[0].replaceAll("\r\n", "");
         infNameContent = infNameContent.replaceAll(" ", "");
         String[] infNameList = infNameContent.split(",");
         if(null == infNameList || 2 != infNameList.length) {

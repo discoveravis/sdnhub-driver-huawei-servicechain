@@ -1,20 +1,14 @@
 [
 	{
-		"ip": "10.229.41.100",
+		"ip": "172.19.32.198",
 		"port": 22,
-		"user": "root",
-		"password": "Test_12345"
+		"user": "lsw08_01",
+		"password": "Huawei12$#"
 	},
 	{
-		"ip": "10.229.51.27",
+		"ip": "172.19.32.199",
 		"port": 22,
-		"user": "root",
-		"password": "Test_12345"
-	},
-	{
-		"ip": "127.0.0.1",
-		"port": 22,
-		"user": "root",
-		"password": "Test_12345"
+		"user": "fw09",
+		"password": "Huawei12#$"
 	}
 ]

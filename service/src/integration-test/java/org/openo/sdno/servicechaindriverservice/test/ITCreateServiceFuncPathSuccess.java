@@ -25,7 +25,7 @@ import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.exception.HttpCode;
 import org.openo.sdno.framework.container.util.JsonUtil;
-import org.openo.sdno.servicechaindriverservice.nbimodel.ServiceFunctionPath;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
 import org.openo.sdno.testframework.checker.IChecker;
 import org.openo.sdno.testframework.http.model.HttpModelUtils;
 import org.openo.sdno.testframework.http.model.HttpRequest;
@@ -63,15 +63,15 @@ public class ITCreateServiceFuncPathSuccess extends TestManager {
         HttpRquestResponse httpCreateObject = HttpModelUtils.praseHttpRquestResponseFromFile(CREATE_SFP_TESTCASE);
         HttpRequest createRequest = httpCreateObject.getRequest();
 
-        Map<String, ServiceFunctionPath> requestSfp =
-                JsonUtil.fromJson(createRequest.getData(), new TypeReference<Map<String, ServiceFunctionPath>>() {});
-        ServiceFunctionPath newSfpData = requestSfp.get("serviceFunctionPath");
+        Map<String, NetServiceChainPath> requestSfp =
+                JsonUtil.fromJson(createRequest.getData(), new TypeReference<Map<String, NetServiceChainPath>>() {});
+        NetServiceChainPath newSfpData = requestSfp.get("serviceFunctionPath");
 
         String gwNeId = topo.getResourceUuid(ResourceType.NETWORKELEMENT, "GwNe");
         String fwNeId = topo.getResourceUuid(ResourceType.NETWORKELEMENT, "FwNe");
 
         newSfpData.setScfNeId(gwNeId);
-        newSfpData.getServicePathHop().get(0).setSfiId(fwNeId);
+        newSfpData.getServicePathHops().get(0).setSfiId(fwNeId);
 
         createRequest.setData(JsonUtil.toJson(requestSfp));
 
@@ -81,7 +81,7 @@ public class ITCreateServiceFuncPathSuccess extends TestManager {
         HttpRequest deleteRequest = deleteHttpObject.getRequest();
 
         deleteRequest.setUri(
-                PathReplace.replaceUuid("service-function-path-id", deleteRequest.getUri(), newSfpData.getId()));
+                PathReplace.replaceUuid("service-function-path-id", deleteRequest.getUri(), newSfpData.getUuid()));
 
         execTestCase(deleteRequest, new SuccessChecker());
     }

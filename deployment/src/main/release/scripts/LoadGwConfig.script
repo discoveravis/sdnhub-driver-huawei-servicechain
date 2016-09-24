@@ -4,96 +4,79 @@
 ## Enter System View
 system-view
 
-## Create VLAN
-vlan ${Vlan_ID}
-
 ## Allow VLAN in Interface
-interface g1/0/0
-port link-type trunk
-port trunk allow-pass vlan ${Vlan_ID}
+interface 10GE1/0/3
+undo portswitch
 commit
 quit
 
 ## Bind SubInterface to Vpn and Alloc IpAddress
-interface g1/0/0.${Vlan_ID}
-vlan-type dot1q ${Vlan_ID}
+interface 10GE1/0/3.${Vlan_ID}
+dot1q termination vid ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.1.4 24
+ip address 10.10.3.1 24
 commit
 quit
 
 ## Allow VLAN in Interface
-interface g1/0/1
-port link-type trunk
-port trunk allow-pass vlan ${Vlan_ID}
+interface 10GE1/0/4
+undo portswitch
 commit
 quit
 
 ## Add Interface to Vpn and Alloc IpAddress
-interface g1/0/1.${Vlan_ID}
-vlan-type dot1q ${Vlan_ID}
+interface 10GE1/0/4.${Vlan_ID}
+dot1q termination vid ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.1.5 24
+ip address 10.10.4.1 24
 commit
 quit
 
-## Create InBound Rule
-acl name ${Vpn_Instance}_Acl_Rule_InBound
+## Create ACL Rule
+acl ${Acl_Rule_ID}
 rule permit vpn-instance ${Vpn_Instance}
 commit
 quit
 
-## Create OutBound Rule
-acl name ${Vpn_Instance}_Acl_Rule_OutBound
-rule permit vpn-instance ${Vpn_Instance}
-commit
-quit
-
-## Create InBound Classifier
-traffic classifier ${Vpn_Instance}_Classifier_InBound type or
-if-match acl ${Vpn_Instance}_Acl_Rule_InBound
-commit
-quit
-
-## Create OutBound Classifier
-traffic classifier ${Vpn_Instance}_Classifier_OutBound type or
-if-match acl ${Vpn_Instance}_Acl_Rule_OutBound
+## Create Traffic Classifier
+traffic classifier Classifier_${Vpn_Instance} type or
+if-match acl ${Acl_Rule_ID}
 commit
 quit
 
 ## Create InBound Traffic Behavior
-traffic behavior ${Vpn_Instance}_Behavior_InBound
-redirect vpn-instance ${Vpn_Instance} nexthop 10.10.1.2
+traffic behavior Behavior_InBound_${Vlan_ID}
+redirect vpn-instance ${Vpn_Instance} nexthop 10.10.5.1
 commit
 quit
 
 ## Create OutBound Traffic Behavior
-traffic behavior ${Vpn_Instance}_Behavior_OutBound
-redirect vpn-instance ${Vpn_Instance} nexthop 10.10.1.3
+traffic behavior Behavior_OutBound_${Vlan_ID}
+redirect vpn-instance ${Vpn_Instance} nexthop 10.10.6.1
 commit
 quit
 
 ## Create InBound Traffic Policy
-traffic policy ${Vpn_Instance}_Policy_InBound
-classifier ${Vpn_Instance}_Classifier_InBound behavior ${Vpn_Instance}_Behavior_InBound
+traffic policy Policy_InBound_${Vlan_ID}
+classifier Classifier_${Vpn_Instance} behavior  Behavior_InBound_${Vlan_ID}
 commit
 quit
 
 ## Create OutBound Traffic Policy
-traffic policy ${Vpn_Instance}_Policy_OutBound
-classifier ${Vpn_Instance}_Classifier_OutBound behavior ${Vpn_Instance}_Behavior_OutBound
+traffic policy Policy_OutBound_${Vlan_ID}
+classifier Classifier_${Vpn_Instance} behavior Behavior_OutBound_${Vlan_ID}
 commit
 quit
 
 ## Apply InBound Traffic Classifier
 interface ${Inbound_Interface}
-traffic-policy ${Vpn_Instance}_Policy_InBound inbound
+traffic-policy Policy_InBound_${Vlan_ID} inbound
 commit
 quit
 
 ## Apply OutBound Traffic Classifier
 interface ${Outbound_Interface}
-traffic-policy ${Vpn_Instance}_Classifier_OutBound inbound
+traffic-policy Policy_OutBound_${Vlan_ID} inbound
 commit
 quit
 

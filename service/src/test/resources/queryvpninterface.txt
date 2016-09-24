@@ -1,0 +1,6 @@
+ VPN-Instance Name and ID : vrf_tenant_vpc_9999, 5
+  Interface Number : 2
+  Interface list : 10GE1/0/2.2,
+                   10GE1/0/1.2
+
+[~LSW08]

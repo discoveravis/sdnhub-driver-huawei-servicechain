@@ -4,23 +4,38 @@
 ## Enter System View
 system-view
 
-## Remove InBound Rule
+## Remove InBound and OutBound Rule
 policy-based-route
-undo rule ${Vpn_Instance}_Rule_InBound
+undo rule name InBound_Rule_${Vlan_ID}
+undo rule name OutBound_Rule_${Vlan_ID}
 quit
 
-## Remove OutBound Rule
-policy-based-route
-undo rule ${Vpn_Instance}_Rule_OutBound
-quit
-
-## Debind interface of Vpn Instance
+## Remove Interface VlanInfo
+interface GigabitEthernet1/0/0.${Vlan_ID}
 undo ip binding vpn-instance ${Vpn_Instance}
+undo vlan-type dot1q ${Vlan_ID}
+quit
+
+## Remove Interface VlanInfo
+interface GigabitEthernet1/0/1.${Vlan_ID}
+undo ip binding vpn-instance ${Vpn_Instance}
+undo vlan-type dot1q ${Vlan_ID}
+quit
+
+## Remove InBound Interface to Trust Zone
+firewall zone trust
+undo add interface GigabitEthernet1/0/1.${Vlan_ID}
+quit
+
+## Remove OutBound Interface to UnTrust Zone
+firewall zone untrust
+undo add interface GigabitEthernet1/0/0.${Vlan_ID}
+quit
 
 ## Remove Vpn Instance
 undo ip vpn-instance ${Vpn_Instance}
 
-## Delete Vlan Info
+## Delete Vlan
 undo vlan ${Vlan_ID}
 
 ## Exit System View
