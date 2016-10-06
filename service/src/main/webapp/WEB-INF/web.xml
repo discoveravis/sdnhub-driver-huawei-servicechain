@@ -19,6 +19,10 @@
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
+     <listener>
+        <listener-class>org.openo.sdno.servicechaindriverservice.registration.DriverRegistrationListener</listener-class>
+    </listener>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>WEB-INF/classes/spring/*.xml,classpath*:META-INF/spring/service.xml,classpath*:spring/service.xml</param-value>
