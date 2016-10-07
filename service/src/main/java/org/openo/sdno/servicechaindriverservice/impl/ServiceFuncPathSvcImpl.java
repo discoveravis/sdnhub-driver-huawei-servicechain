@@ -25,7 +25,7 @@ import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath
 import org.openo.sdno.servicechaindriverservice.db.ServiceChainInfoDao;
 import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfig;
 import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfigReader;
-import org.openo.sdno.servicechaindriverservice.inf.IServiceFuncPathService;
+import org.openo.sdno.servicechaindriverservice.inf.ServiceFuncPathService;
 import org.openo.sdno.servicechaindriverservice.model.ServiceChainInfo;
 import org.openo.sdno.servicechaindriverservice.sbi.FirewallConfigurationAPI;
 import org.openo.sdno.servicechaindriverservice.sbi.GatewayConfigurationAPI;
@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  * @author
  * @version SDNO 0.5 2016-08-19
  */
-public class ServiceFuncPathSvcImpl implements IServiceFuncPathService {
+public class ServiceFuncPathSvcImpl implements ServiceFuncPathService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ServiceFuncPathSvcImpl.class);
 
