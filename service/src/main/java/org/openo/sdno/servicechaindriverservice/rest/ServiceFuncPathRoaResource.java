@@ -41,7 +41,7 @@ import org.openo.sdno.overlayvpn.consts.HttpCode;
 import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
 import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPathRsp;
 import org.openo.sdno.overlayvpn.util.check.UuidUtil;
-import org.openo.sdno.servicechaindriverservice.inf.IServiceFuncPathService;
+import org.openo.sdno.servicechaindriverservice.inf.ServiceFuncPathService;
 import org.openo.sdno.servicechaindriverservice.util.CheckServiceFuncPathUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,9 +62,9 @@ public class ServiceFuncPathRoaResource {
     private static final String SERVICE_CHAIN_PATH_KEY = "serviceChainPath";
 
     @Resource
-    private IServiceFuncPathService service;
+    private ServiceFuncPathService service;
 
-    public void setService(IServiceFuncPathService service) {
+    public void setService(ServiceFuncPathService service) {
         this.service = service;
     }
 

@@ -25,7 +25,7 @@ import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath
  * @author
  * @version SDNO 0.5 2016-8-29
  */
-public interface IServiceFuncPathService {
+public interface ServiceFuncPathService {
 
     /**
      * Create ServiceFunctionPath.<br>
