@@ -36,6 +36,15 @@ import org.openo.sdno.framework.container.util.JsonUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * 
+ * Driver registration listener class.<br/>
+ * <p>
+ * </p>
+ *
+ * @author
+ * @version     SDNO 0.5  October 11, 2016
+ */
 public class DriverRegistrationListener implements ServletContextListener {
 
     private static final int DRIVER_REGISTRATION_DELAY = 60;

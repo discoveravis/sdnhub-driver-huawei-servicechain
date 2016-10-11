@@ -26,7 +26,7 @@ import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfig;
 import org.openo.sdno.servicechaindriverservice.sbi.GatewayConfigurationAPI;
 
 /**
- * Util class of VpnInstance.<br>
+ * Utility class of VpnInstance.<br>
  * 
  * @author
  * @version SDNO 0.5 2016-08-30
@@ -43,11 +43,11 @@ public class VpnInstanceUtil {
     }
 
     /**
-     * Construct Vpn Name.<br>
+     * Construct VPN Name.<br>
      * 
      * @param deviceCfg Device Configuration
      * @param tenantName tenant name
-     * @param vpcName Vpc name
+     * @param vpcName VPC name
      * @return VpnInstance Name returned
      * @since SDNO 0.5
      */
@@ -76,7 +76,7 @@ public class VpnInstanceUtil {
      * Query InBound Interface.<br>
      * 
      * @param deviceCfg Device Configuration
-     * @param vpnName Vpn instance name
+     * @param vpnName VPN instance name
      * @return InBound Interface queried out
      * @throws ServiceException when query InBound Interface failed
      * @since SDNO 0.5
@@ -89,7 +89,7 @@ public class VpnInstanceUtil {
      * Query OutBound Interface.<br>
      * 
      * @param deviceCfg Device Configuration
-     * @param vpnName Vpn instance name
+     * @param vpnName VPN instance name
      * @return OutBound Interface queried out
      * @throws ServiceException when query OutBound Interface failed
      * @since SDNO 0.5
