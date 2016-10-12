@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * Dao class of Service Chain Info.<br>
+ * DAO class of Service Chain Info.<br>
  * 
  * @author
  * @version SDNO 0.5 2016-8-30
@@ -133,10 +133,10 @@ public class ServiceChainInfoDao {
     }
 
     /**
-     * Allocate Vlan Id Resource.<br>
+     * Allocate VLAN Id Resource.<br>
      * 
-     * @return Vlan Id allocated
-     * @throws ServiceException when allocate vlan id failed
+     * @return VLAN Id allocated
+     * @throws ServiceException when allocate VLAN id failed
      * @since SDNO 0.5
      */
     public int allocVlanId() throws ServiceException {

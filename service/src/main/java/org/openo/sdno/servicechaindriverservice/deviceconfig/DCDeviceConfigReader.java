@@ -67,7 +67,7 @@ public class DCDeviceConfigReader {
     /**
      * Get Device Configuration By IpAddress.<br>
      * 
-     * @param ipAddress Ip Address
+     * @param ipAddress IP Address
      * @return Device Configuration
      * @throws ServiceException when get configuration failed
      * @since SDNO 0.5

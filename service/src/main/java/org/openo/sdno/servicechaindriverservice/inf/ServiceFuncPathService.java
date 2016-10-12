@@ -40,7 +40,7 @@ public interface ServiceFuncPathService {
     /**
      * Delete ServiceFunctionPath.<br>
      * 
-     * @param uuid NetServiceChainPath uuid
+     * @param uuid NetServiceChainPath UUID
      * @throws ServiceException when delete NetServiceChainPath failed
      * @since SDNO 0.5
      */
