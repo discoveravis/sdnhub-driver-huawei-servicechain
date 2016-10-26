@@ -53,7 +53,7 @@ undo traffic policy Policy_OutBound_${Vlan_ID}
 commit
 
 ## Remove Traffic Classifier
-undo traffic classifier Classifier_${Vpn_Instance}
+undo traffic classifier Classifier_${Vlan_ID}
 commit
 
 ## Remove InBound Traffic Behavior

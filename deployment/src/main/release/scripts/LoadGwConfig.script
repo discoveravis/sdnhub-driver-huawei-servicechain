@@ -53,7 +53,7 @@ commit
 quit
 
 ## Create Traffic Classifier
-traffic classifier Classifier_${Vpn_Instance} type or
+traffic classifier Classifier_${Vlan_ID} type or
 if-match acl ${Acl_Rule_ID}
 commit
 quit
@@ -72,13 +72,13 @@ quit
 
 ## Create InBound Traffic Policy
 traffic policy Policy_InBound_${Vlan_ID}
-classifier Classifier_${Vpn_Instance} behavior  Behavior_InBound_${Vlan_ID}
+classifier Classifier_${Vlan_ID} behavior  Behavior_InBound_${Vlan_ID}
 commit
 quit
 
 ## Create OutBound Traffic Policy
 traffic policy Policy_OutBound_${Vlan_ID}
-classifier Classifier_${Vpn_Instance} behavior Behavior_OutBound_${Vlan_ID}
+classifier Classifier_${Vlan_ID} behavior Behavior_OutBound_${Vlan_ID}
 commit
 quit
 
