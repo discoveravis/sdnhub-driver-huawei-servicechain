@@ -33,6 +33,8 @@ import org.openo.sdno.servicechaindriverservice.sbi.GatewayConfigurationAPI;
  */
 public class VpnInstanceUtil {
 
+    private static final int MIN_VPN_INTERFACE_NUMBER = 2;
+
     private static final String VRF_KEY_WORD = "vrf";
 
     private static final Pattern QUERY_VPN_INSTANCE_PATTERN = Pattern.compile("VPN-Instance Name and ID : (.*),");
@@ -116,7 +118,7 @@ public class VpnInstanceUtil {
         String infNameContent = splitInfContent[0].replaceAll("\r\n", "");
         infNameContent = infNameContent.replaceAll(" ", "");
         String[] infNameList = infNameContent.split(",");
-        if(null == infNameList || 2 != infNameList.length) {
+        if(null == infNameList || infNameList.length < MIN_VPN_INTERFACE_NUMBER) {
             throw new ServiceException("Queried Interface List is wrong!!");
         }
 
