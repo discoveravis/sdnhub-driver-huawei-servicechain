@@ -60,13 +60,13 @@ quit
 
 ## Create InBound Traffic Behavior
 traffic behavior Behavior_InBound_${Vlan_ID}
-redirect vpn-instance ${Vpn_Instance} nexthop 10.10.5.1
+redirect vpn-instance ${Vpn_Instance} nexthop 10.10.3.2
 commit
 quit
 
 ## Create OutBound Traffic Behavior
 traffic behavior Behavior_OutBound_${Vlan_ID}
-redirect vpn-instance ${Vpn_Instance} nexthop 10.10.6.1
+redirect vpn-instance ${Vpn_Instance} nexthop 10.10.4.2
 commit
 quit
 

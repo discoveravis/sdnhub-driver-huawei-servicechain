@@ -13,17 +13,13 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ###############################################################################
-## Load Configuration Script for Firewall
+## Load Configuration Script for FireWall
 
 ## Enter System View
 system-view
 
 ## Create Tenant Vpn
 ip vpn-instance ${Vpn_Instance}
-quit
-
-## Create VLAN
-vlan ${Vlan_ID}
 quit
 
 ## Allow VLAN in Interface
@@ -35,7 +31,7 @@ quit
 interface GigabitEthernet1/0/0.${Vlan_ID}
 vlan-type dot1q ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.5.1 24
+ip address 10.10.3.2 24
 quit
 
 ## Allow VLAN in Interface
@@ -47,7 +43,7 @@ quit
 interface GigabitEthernet1/0/1.${Vlan_ID}
 vlan-type dot1q ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.6.1 24
+ip address 10.10.4.2 24
 quit
 
 ## Add InBound Interface to Trust Zone
