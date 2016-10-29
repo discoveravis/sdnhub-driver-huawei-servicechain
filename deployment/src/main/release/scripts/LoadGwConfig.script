@@ -19,30 +19,30 @@
 system-view
 
 ## Allow VLAN in Interface
-interface 10GE1/0/3
+interface 10GE1/0/13
 undo portswitch
 commit
 quit
 
 ## Bind SubInterface to Vpn and Alloc IpAddress
-interface 10GE1/0/3.${Vlan_ID}
+interface 10GE1/0/13.${Vlan_ID}
 dot1q termination vid ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.3.1 24
+ip address 10.12.3.1 24
 commit
 quit
 
 ## Allow VLAN in Interface
-interface 10GE1/0/4
+interface 10GE1/0/14
 undo portswitch
 commit
 quit
 
 ## Add Interface to Vpn and Alloc IpAddress
-interface 10GE1/0/4.${Vlan_ID}
+interface 10GE1/0/14.${Vlan_ID}
 dot1q termination vid ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.4.1 24
+ip address 10.12.4.1 24
 commit
 quit
 
@@ -60,13 +60,13 @@ quit
 
 ## Create InBound Traffic Behavior
 traffic behavior Behavior_InBound_${Vlan_ID}
-redirect vpn-instance ${Vpn_Instance} nexthop 10.10.3.2
+redirect vpn-instance ${Vpn_Instance} nexthop 10.12.3.2
 commit
 quit
 
 ## Create OutBound Traffic Behavior
 traffic behavior Behavior_OutBound_${Vlan_ID}
-redirect vpn-instance ${Vpn_Instance} nexthop 10.10.4.2
+redirect vpn-instance ${Vpn_Instance} nexthop 10.12.4.2
 commit
 quit
 

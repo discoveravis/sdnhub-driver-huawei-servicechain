@@ -31,7 +31,7 @@ quit
 interface GigabitEthernet1/0/0.${Vlan_ID}
 vlan-type dot1q ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.3.2 24
+ip address 10.12.3.2 24
 quit
 
 ## Allow VLAN in Interface
@@ -43,24 +43,24 @@ quit
 interface GigabitEthernet1/0/1.${Vlan_ID}
 vlan-type dot1q ${Vlan_ID}
 ip binding vpn-instance ${Vpn_Instance}
-ip address 10.10.4.2 24
+ip address 10.12.4.2 24
 quit
 
 ## Add InBound Interface to Trust Zone
 firewall zone trust
-add interface GigabitEthernet1/0/1.${Vlan_ID}
+add interface GigabitEthernet1/0/0.${Vlan_ID}
 quit
 
 ## Add OutBound Interface to UnTrust Zone
 firewall zone untrust
-add interface GigabitEthernet1/0/0.${Vlan_ID}
+add interface GigabitEthernet1/0/1.${Vlan_ID}
 quit
 
 ## Create InBound Pbr
 policy-based-route
 rule name InBound_Rule_${Vlan_ID}
 ingress-interface GigabitEthernet1/0/0.${Vlan_ID}
-action pbr egress-interface GigabitEthernet1/0/1.${Vlan_ID} next-hop 10.10.3.1
+action pbr egress-interface GigabitEthernet1/0/1.${Vlan_ID} next-hop 10.12.4.1
 quit
 quit
 
@@ -68,7 +68,7 @@ quit
 policy-based-route
 rule name OutBound_Rule_${Vlan_ID}
 ingress-interface GigabitEthernet1/0/1.${Vlan_ID}
-action pbr egress-interface GigabitEthernet1/0/0.${Vlan_ID} next-hop 10.10.4.1
+action pbr egress-interface GigabitEthernet1/0/0.${Vlan_ID} next-hop 10.12.3.1
 quit
 quit
 
