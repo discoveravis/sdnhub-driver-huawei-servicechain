@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdno.servicechaindriverservice.deviceconfig.DCDeviceConfig;
 import org.openo.sdno.servicechaindriverservice.sbi.GatewayConfigurationAPI;
@@ -48,13 +49,11 @@ public class VpnInstanceUtil {
      * Construct VPN Name.<br>
      * 
      * @param deviceCfg Device Configuration
-     * @param tenantName tenant name
      * @param vpcName VPC name
      * @return VpnInstance Name returned
      * @since SDNO 0.5
      */
-    public static String queryVpnInstanceName(DCDeviceConfig deviceCfg, String tenantName, String vpcName)
-            throws ServiceException {
+    public static String queryVpnInstanceName(DCDeviceConfig deviceCfg, String vpcName) throws ServiceException {
 
         GatewayConfigurationAPI gwAPI = new GatewayConfigurationAPI(deviceCfg);
         String vpnInstanceContent = gwAPI.queryVpnInstance();
@@ -66,7 +65,7 @@ public class VpnInstanceUtil {
         }
 
         for(String vpnName : vpnNameList) {
-            if(vpnName.contains(VRF_KEY_WORD + "_" + tenantName + "_" + vpcName)) {
+            if(vpnName.contains(extractVpcSubName(vpcName))) {
                 return vpnName;
             }
         }
@@ -123,6 +122,19 @@ public class VpnInstanceUtil {
         }
 
         return infNameList[infIndex];
+    }
+
+    private static String extractVpcSubName(String vpcName) throws ServiceException {
+        if(StringUtils.isBlank(vpcName)) {
+            throw new ServiceException("vpcName is invalid!!");
+        }
+
+        String[] subNameList = vpcName.split("_");
+        if(null == subNameList || 0 == subNameList.length) {
+            throw new ServiceException("vpcName format is invalid!!");
+        }
+
+        return subNameList[0];
     }
 
 }

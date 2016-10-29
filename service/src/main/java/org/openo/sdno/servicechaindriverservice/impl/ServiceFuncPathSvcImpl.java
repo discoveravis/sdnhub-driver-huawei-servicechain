@@ -88,7 +88,7 @@ public class ServiceFuncPathSvcImpl implements ServiceFuncPathService {
             throw new ServiceException("Vlan Id is invalid!!");
         }
 
-        String vpnInstance = VpnInstanceUtil.queryVpnInstanceName(sfcDevice, path.getName(), path.getDescription());
+        String vpnInstance = VpnInstanceUtil.queryVpnInstanceName(sfcDevice, path.getName());
         String inBoundInterface = VpnInstanceUtil.queryInBoundInterface(sfcDevice, vpnInstance);
         String outBoundInterface = VpnInstanceUtil.queryOutBoundInterface(sfcDevice, vpnInstance);
 

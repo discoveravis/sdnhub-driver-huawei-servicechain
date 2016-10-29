@@ -4,4 +4,4 @@
 
  VPN-Instance Name and ID : Test, 4
 
- VPN-Instance Name and ID : vrf_tenant_vpc_9999, 2
+ VPN-Instance Name and ID : vrf_1234555_3444444_9999, 2
