@@ -36,8 +36,6 @@ public class VpnInstanceUtil {
 
     private static final int MIN_VPN_INTERFACE_NUMBER = 2;
 
-    private static final String VRF_KEY_WORD = "vrf";
-
     private static final Pattern QUERY_VPN_INSTANCE_PATTERN = Pattern.compile("VPN-Instance Name and ID : (.*),");
 
     private static final Pattern QUERY_VPN_INTERFACE_PATTERN = Pattern.compile("Interface list : ");
@@ -129,7 +127,7 @@ public class VpnInstanceUtil {
             throw new ServiceException("vpcName is invalid!!");
         }
 
-        String[] subNameList = vpcName.split("_");
+        String[] subNameList = vpcName.split("-");
         if(null == subNameList || 0 == subNameList.length) {
             throw new ServiceException("vpcName format is invalid!!");
         }
