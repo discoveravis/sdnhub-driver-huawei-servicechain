@@ -1,14 +1,14 @@
 [
 	{
-		"ip": "172.19.32.198",
+		"ip": "192.168.233.202",
 		"port": 22,
-		"user": "lsw08_01",
-		"password": "Huawei12$#"
+		"user": "lsw03@huawei",
+		"password": "Huawei12#$"
 	},
 	{
-		"ip": "172.19.32.199",
+		"ip": "192.168.233.153",
 		"port": 22,
-		"user": "fw09",
+		"user": "admin",
 		"password": "Huawei12#$"
 	}
 ]
