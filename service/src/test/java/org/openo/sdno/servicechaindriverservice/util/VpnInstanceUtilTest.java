@@ -47,7 +47,7 @@ public class VpnInstanceUtilTest {
             }
         };
 
-        String vpnInstance = VpnInstanceUtil.queryVpnInstanceName(new DCDeviceConfig(), "3444444_23_32_45");
+        String vpnInstance = VpnInstanceUtil.queryVpnInstanceName(new DCDeviceConfig(), "3444444-23-32-45");
         assertTrue("vrf_1234555_3444444_9999".equals(vpnInstance));
     }
 
