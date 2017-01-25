@@ -36,25 +36,25 @@
         </jaxrs:serviceBeans>
         <!-- registering providers -->
         <jaxrs:providers>
-            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />
-            <bean class="org.openo.sdno.wanservice.rest.exceptionmapper.ServiceExceptionMapper" />
-            <bean class="org.openo.sdno.wanservice.rest.exceptionmapper.GenericExceptionMapper" />
+            <bean class="org.codehaus.jackson.jaxrs.JacksonJsonProvider" />            
+            <bean class="org.openo.sdno.exception.ServiceExceptionMapper" />
+            <bean class="org.openo.sdno.exception.GenericExceptionMapper" />
         </jaxrs:providers>
     </jaxrs:server>
 
-    <bean id="ServiceChainDriverRestModule" class="org.openo.sdno.servicechaindriverservice.ServiceChainDriverRestModule"
+    <bean id="ServiceChainDriverRestModule" class="org.openo.sdnhub.servicechaindriverservice.ServiceChainDriverRestModule"
         init-method="start" destroy-method="stop">
     </bean>
 
-    <bean id="ServiceFuncPathRoaResource" class="org.openo.sdno.servicechaindriverservice.rest.ServiceFuncPathRoaResource">
+    <bean id="ServiceFuncPathRoaResource" class="org.openo.sdnhub.servicechaindriverservice.rest.ServiceFuncPathRoaResource">
         <property name="service" ref="ServiceFuncPathService"></property>
     </bean>
 
-    <bean id="ServiceFuncPathService" class="org.openo.sdno.servicechaindriverservice.impl.ServiceFuncPathSvcImpl">
+    <bean id="ServiceFuncPathService" class="org.openo.sdnhub.servicechaindriverservice.impl.ServiceFuncPathSvcImpl">
         <property name="serviceInfoDao" ref="ServiceInfoDao"></property>
     </bean>
 
-    <bean id="ServiceInfoDao" class="org.openo.sdno.servicechaindriverservice.db.ServiceChainInfoDao">
+    <bean id="ServiceInfoDao" class="org.openo.sdnhub.servicechaindriverservice.db.ServiceChainInfoDao">
     </bean>
 
 </beans>
