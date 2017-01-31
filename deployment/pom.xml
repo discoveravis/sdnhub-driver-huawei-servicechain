@@ -24,7 +24,7 @@
 
     <artifactId>servicechaindriverservice-deployment</artifactId>
     <packaging>pom</packaging>
-    <name>sdno-driver-huawei-servicechain/deployment</name>
+    <name>sdnhub-driver-huawei-servicechain/deployment</name>
 
     <build>
         <pluginManagement>
