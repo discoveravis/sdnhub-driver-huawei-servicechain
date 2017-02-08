@@ -20,13 +20,15 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.openo.baseservice.remoteservice.exception.ServiceException;
 import org.openo.sdnhub.servicechaindriverservice.deviceconfig.DCDeviceConfig;
 import org.openo.sdnhub.servicechaindriverservice.sbi.GatewayConfigurationAPI;
-import org.openo.sdnhub.servicechaindriverservice.util.VpnInstanceUtil;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServiceChainPath;
+import org.openo.sdno.overlayvpn.model.netmodel.servicechain.NetServicePathHop;
 
 import mockit.Mock;
 import mockit.MockUp;
@@ -93,6 +95,34 @@ public class VpnInstanceUtilTest {
         } catch(ServiceException e) {
             assertTrue(false);
         }
+    }
+
+    @Test
+    public void testCheckServiceFuncPathUtil_no_hop_data() {
+        NetServiceChainPath netServiceChainPath = new NetServiceChainPath();
+        netServiceChainPath.setUuid("uuid1234");
+        netServiceChainPath.setScfNeId("scfneId1234");
+
+        try {
+            CheckServiceFuncPathUtil.check(netServiceChainPath);
+            assertTrue(false);
+        } catch(ServiceException e) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void testCheckServiceFuncUtil_with_hop_data() {
+        NetServiceChainPath netServiceChainPath = new NetServiceChainPath();
+        netServiceChainPath.setUuid("uuid1234");
+        netServiceChainPath.setScfNeId("scfneId1234");
+
+        NetServicePathHop netServicePathHop = new NetServicePathHop();
+        netServicePathHop.setSffId("sfId1234");
+
+        netServiceChainPath.setServicePathHops(Arrays.asList(netServicePathHop));
+
+        assertTrue(true);
     }
 
 }
