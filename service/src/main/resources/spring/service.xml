@@ -33,6 +33,7 @@
         <!-- registering beans -->
         <jaxrs:serviceBeans>
             <ref bean="ServiceFuncPathRoaResource"></ref>
+            <ref bean="healthCheckRoaResource"></ref>
         </jaxrs:serviceBeans>
         <!-- registering providers -->
         <jaxrs:providers>
@@ -56,5 +57,8 @@
 
     <bean id="ServiceInfoDao" class="org.openo.sdnhub.servicechaindriverservice.db.ServiceChainInfoDao">
     </bean>
+
+    <bean id="healthCheckRoaResource" class="org.openo.sdno.healthcheck.rest.HealthCheckRoaResource" />
+    <bean id="checker" class="org.openo.sdno.healthcheck.service.DefaultHealthChecker" />
 
 </beans>
